@@ -1,8 +1,11 @@
+import { RouterProvider } from "react-router-dom";
+import router from './Router';
+import AppProviders from './providers/AppProviders';
 function App() {
   return (
-    <div>
-      <h1>AI Resume Analyzer</h1>
-    </div>
+    <AppProviders>
+      <RouterProvider router={router} />
+    </AppProviders>
   );
 }
 
