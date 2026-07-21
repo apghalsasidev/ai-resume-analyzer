@@ -1,0 +1,69 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+
+    "module": "ESNext",
+
+    "moduleResolution": "Bundler",
+
+    "allowImportingTsExtensions": true,
+
+    "resolveJsonModule": true,
+
+    "isolatedModules": true,
+
+    "moduleDetection": "force",
+
+    "jsx": "react-jsx",
+
+    "strict": true,
+
+    "noEmit": true,
+
+    "skipLibCheck": true,
+
+    "types": [
+      "vite/client"
+    ],
+
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@pages/*": [
+        "./src/pages/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@services/*": [
+        "./src/services/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@types/*": [
+        "./src/types/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ]
+    }
+  },
+
+  "include": [
+    "src"
+  ]
+}
