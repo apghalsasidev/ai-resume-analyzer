@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import ResumeUploadPage from '@/features/resume-upload/ResumeUploadPage';
+import ResumeUploadPage from '@/features/resme-upload/ResumeUploadPage';
 
 const router = createBrowserRouter([
   {
