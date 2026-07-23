@@ -1,18 +1,12 @@
-import { createBrowserRouter } from "react-router-dom";
-import { Typography } from '@mui/material';
-const Home = () => {
-    return (
-        <Typography variant="h4" component="h1" gutterBottom> 
-            Home Page
-        </Typography>
-    );
-};
+import { createBrowserRouter } from 'react-router-dom';
+
+import ResumeUploadPage from '@/features/resume-upload/ResumeUploadPage';
 
 const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Home />
-    }
+  {
+    path: '/',
+    element: <ResumeUploadPage />,
+  },
 ]);
 
 export default router;
