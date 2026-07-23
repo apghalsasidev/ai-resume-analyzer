@@ -1,8 +1,11 @@
+import { Container } from '@mui/material';
+import ResumeUploadPage from '@/features/resume-upload/ResumeUploadPage';
+
 function App() {
   return (
-    <div>
-      <h1>AI Resume Analyzer</h1>
-    </div>
+    <Container maxWidth="lg">
+      <ResumeUploadPage />
+    </Container>
   );
 }
 
