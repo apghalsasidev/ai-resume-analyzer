@@ -1,14 +1,51 @@
-import { Box, Card, CardContent, Stack, Typography, Button } from '@mui/material';
+import { useRef, useState, ChangeEvent } from 'react';
+
+import { Box, Card, CardContent, Stack, Typography, Button, Alert } from '@mui/material';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import { ACCEPTED_FILE_EXTENSIONS, MAX_FILE_SIZE_MB } from '@/constants/file';
-import { useRef } from 'react';
+import { validateResumeFile } from './validateResumeFile';
+
 const ResumeUploadCard = () => {
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    
     const handleBrowseClick = () => {
         fileInputRef.current?.click();
     };
 
-  return (
+    function processSelectedFile(file: File) {
+        // 4.1 Validate
+        const result = validateResumeFile(file);
+        
+        // 4.2 Handle Validation Result
+        if (!result.valid) {
+            setSelectedFile(null);
+            setError(result.message);
+            return;
+        }
+
+        // 4.3 Successful Validation: Set the selected file
+        setSelectedFile(file);
+        setError(null);
+    }
+
+    const handleFileSelect = (event: ChangeEvent<HTMLInputElement>) => {
+        // 1. Read selected file
+        const file = event.target.files?.[0];
+        
+        // 2. Handle Cancelled File Selection
+        if (!file) {
+            return;
+        } 
+        // 3. Process the selected file
+        processSelectedFile(file);
+
+        // 4. After selecting file, clear input value to allow re-selection
+        event.target.value = '';
+    };
+
+    return (
     <Card elevation={3}> 
         <CardContent>
             <Stack direction="column" spacing={4} sx={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}>
@@ -56,7 +93,22 @@ const ResumeUploadCard = () => {
                         type="file"
                         hidden
                         accept={ACCEPTED_FILE_EXTENSIONS.join(',')}
+                        onChange={handleFileSelect}
                     />
+                    {
+                        error && (
+                            <Alert severity="error" sx={{ mt: 2 }}>
+                                {error} 
+                            </Alert>
+                        )
+                    }
+                    {
+                        selectedFile && (
+                            <Alert severity="success" sx={{ mt: 2 }}>
+                                Selected File: {selectedFile.name}
+                            </Alert>
+                        )
+                    }
                 </Box>
             </Stack>
         </CardContent>
