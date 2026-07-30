@@ -14,7 +14,6 @@ const ResumeUploadCard = () => {
     const dragCounter = useRef(0);
 
     const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
-        console.log("drag enter");
         event.preventDefault();
         dragCounter.current++;
         if (dragCounter.current === 1) {
@@ -23,7 +22,6 @@ const ResumeUploadCard = () => {
     };
     
     const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
-        console.log("drag leave");
         event.preventDefault();
 
         dragCounter.current = Math.max(0, dragCounter.current - 1);
@@ -34,7 +32,6 @@ const ResumeUploadCard = () => {
     };
 
     const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-        console.log("drag over");
         event.preventDefault();
     };
     
