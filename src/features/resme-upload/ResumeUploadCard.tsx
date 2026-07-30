@@ -2,7 +2,7 @@ import { useRef, useState, ChangeEvent } from 'react';
 
 import { Box, Card, CardContent, Stack, Typography, Button, Alert } from '@mui/material';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
-import { ACCEPTED_FILE_EXTENSIONS, MAX_FILE_SIZE_MB } from '@/constants/file';
+import { ACCEPTED_FILE_EXTENSIONS, MAX_FILE_SIZE_MB , DROP_MULTIPLE_FILES_ERROR} from '@/constants/file';
 import { validateResumeFile } from './validateResumeFile';
 
 const ResumeUploadCard = () => {
@@ -44,7 +44,7 @@ const ResumeUploadCard = () => {
             return;
         }
         if (files.length > 1) {
-            setError('Please drop only one file at a time.');
+            setError(DROP_MULTIPLE_FILES_ERROR );
             return;
         }
         const file = files[0];
