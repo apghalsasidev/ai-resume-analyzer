@@ -8,12 +8,56 @@ import { validateResumeFile } from './validateResumeFile';
 const ResumeUploadCard = () => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
+    const [isDragging, setIsDragging] = useState(false);
+
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const dragCounter = useRef(0);
+
+    const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
+        console.log("drag enter");
+        event.preventDefault();
+        dragCounter.current++;
+        if (dragCounter.current === 1) {
+            setIsDragging(true);
+        }
+    };
     
+    const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+        console.log("drag leave");
+        event.preventDefault();
+
+        dragCounter.current = Math.max(0, dragCounter.current - 1);
+
+        if (dragCounter.current === 0) {
+            setIsDragging(false);
+        }
+    };
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+        console.log("drag over");
+        event.preventDefault();
+    };
+    
+    const handleFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
+        event.preventDefault();
+        dragCounter.current = 0;
+        setIsDragging(false);
+        const files = event.dataTransfer.files;
+        if (files.length === 0) {
+            return;
+        }
+        if (files.length > 1) {
+            setError('Please drop only one file at a time.');
+            return;
+        }
+        const file = files[0];
+        processSelectedFile(file);
+    };
+
     const handleBrowseClick = () => {
         fileInputRef.current?.click();
     };
-
+    
     function processSelectedFile(file: File) {
         // 4.1 Validate
         const result = validateResumeFile(file);
@@ -46,73 +90,80 @@ const ResumeUploadCard = () => {
     };
 
     return (
-    <Card elevation={3}> 
-        <CardContent>
-            <Stack direction="column" spacing={4} sx={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                {/* Header */}
-                <Stack direction="column" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
-                    <Typography variant="h5">Upload Your Resume</Typography>
-                    <Typography variant="body2"> Upload your resume in PDF or DOCX format to begin AI-powered
-              resume analysis.</Typography>
-                </Stack>
-                {/* File Upload Section */}
-                <Box 
-                    onClick={handleBrowseClick}
-                    sx={{ 
-                        border: '2px dashed #1976d2', 
-                        borderRadius: '8px', 
-                        p: 4, 
-                        width: '100%', 
-                        textAlign: 'center' 
-                    }}
-                >
-                    <Stack spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <CloudUploadOutlinedIcon 
-                            color="primary"
-                            sx={{ fontSize: 56 }}
-                        />
-                        <Typography variant="h6">
-                            Drag & Drop your resume here
-                        </Typography>
-
-                        <Typography
-                            variant="body2"
-                            color="text.secondary"
-                        >
-                            or
-                        </Typography>
-                        <Button variant="contained">
-                            Browse Files
-                        </Button> 
-                        <Typography variant="caption" color="text.secondary">
-                            {ACCEPTED_FILE_EXTENSIONS.join(' • ') } | Max file size: {MAX_FILE_SIZE_MB}MB
-                        </Typography>
+        <Card elevation={3}> 
+            <CardContent>
+                <Stack direction="column" spacing={4} sx={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                    {/* Header */}
+                    <Stack direction="column" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Typography variant="h5">Upload Your Resume</Typography>
+                        <Typography variant="body2"> Upload your resume in PDF or DOCX format to begin AI-powered resume analysis.</Typography>
                     </Stack>
-                    <input
-                        ref={fileInputRef}
-                        type="file"
-                        hidden
-                        accept={ACCEPTED_FILE_EXTENSIONS.join(',')}
-                        onChange={handleFileSelect}
-                    />
-                    {
-                        error && (
-                            <Alert severity="error" sx={{ mt: 2 }}>
-                                {error} 
-                            </Alert>
-                        )
-                    }
-                    {
-                        selectedFile && (
-                            <Alert severity="success" sx={{ mt: 2 }}>
-                                Selected File: {selectedFile.name}
-                            </Alert>
-                        )
-                    }
-                </Box>
-            </Stack>
-        </CardContent>
-    </Card>
-  )
+                    {/* File Upload Section - Browse & Drag-and-Drop */}
+                    <Box 
+                        onClick={handleBrowseClick}
+                        onDragEnter={handleDragEnter}
+                        onDragLeave={handleDragLeave}
+                        onDragOver={handleDragOver}
+                        onDrop={handleFileDrop}
+                        sx={{
+                            border: "2px dashed",
+                            borderColor: isDragging ? "primary.main" : "#1976d2",
+                            backgroundColor: isDragging
+                                ? "action.hover"
+                                : "transparent",
+                            borderRadius: 2,
+                            p: 4,
+                            width: "100%",
+                            textAlign: "center",
+                            transition: "border-color 200ms ease, background-color 200ms ease"
+                        }}
+                    >
+                        <Stack spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <CloudUploadOutlinedIcon 
+                                color="primary"
+                                sx={{ fontSize: 56 }}
+                            />
+                            <Typography variant="h6">
+                                Drag & Drop your resume here
+                            </Typography>
+                            <Typography
+                                variant="body2"
+                                color="text.secondary"
+                            >
+                                or
+                            </Typography>
+                            <Button variant="contained">
+                                Browse Files
+                            </Button> 
+                            <Typography variant="caption" color="text.secondary">
+                                {ACCEPTED_FILE_EXTENSIONS.join(' • ') } | Max file size: {MAX_FILE_SIZE_MB}MB
+                            </Typography>
+                        </Stack>
+                        <input
+                            ref={fileInputRef}
+                            type="file"
+                            hidden
+                            accept={ACCEPTED_FILE_EXTENSIONS.join(',')}
+                            onChange={handleFileSelect}
+                        />
+                        {
+                            error && (
+                                <Alert severity="error" sx={{ mt: 2 }}>
+                                    {error} 
+                                </Alert>
+                            )
+                        }
+                        {
+                            selectedFile && (
+                                <Alert severity="success" sx={{ mt: 2 }}>
+                                    Selected File: {selectedFile.name}
+                                </Alert>
+                            )
+                        }
+                    </Box>
+                </Stack>
+            </CardContent>
+        </Card>
+    )
 };
 export default ResumeUploadCard;
