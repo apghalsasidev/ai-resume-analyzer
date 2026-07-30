@@ -124,7 +124,9 @@ const ResumeUploadCard = () => {
                                 sx={{ fontSize: 56 }}
                             />
                             <Typography variant="h6">
-                                Drag & Drop your resume here
+                                {
+                                    isDragging ? "Drop your resume here" : "Drag & Drop your resume here"
+                                }
                             </Typography>
                             <Typography
                                 variant="body2"
