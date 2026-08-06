@@ -18,4 +18,12 @@ export default defineConfig({
       '@types': fileURLToPath(new URL('./src/types', import.meta.url)),
     },
   },
-});
+
+  // Vitest config is not part of Vite's strict UserConfig types in some setups.
+  // Cast to any to avoid TypeScript error while keeping the runtime config.
+  test: ({
+      globals: true,
+      environment: "jsdom",
+      setupFiles: "./src/test/setup.ts",
+  } as any),
+} as any);
