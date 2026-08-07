@@ -1,7 +1,9 @@
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 
 import ResumeUploadCard from "./ResumeUploadCard";
+import createTestFile  from "../../test/utils/testUtils";
 
 describe("ResumeUploadCard", () => {
      describe('Rendering', () => {
@@ -30,6 +32,25 @@ describe("ResumeUploadCard", () => {
             expect(
                 screen.getByRole('button', {name:/Browse Files/i})
             ).toBeInTheDocument();
+        });
+    });
+
+    describe("File Upload", () => {
+        it("should display the selected filename after uploading a valid file", async () => {
+            // Arrange
+            const user = userEvent.setup();
+            render(<ResumeUploadCard />);
+            const resumeFile = createTestFile({
+                name: "Resume.pdf",
+            });
+            const fileInput = screen.getByTestId("resume-upload-input");
+            // Act
+            await user.upload(fileInput, resumeFile);
+            // Assert
+            const successAlert = await screen.findByRole("alert");
+            expect(successAlert).toBeInTheDocument();
+            expect(successAlert).toHaveTextContent("Selected File:");
+            expect(successAlert).toHaveTextContent("Resume.pdf");
         });
     });
 });

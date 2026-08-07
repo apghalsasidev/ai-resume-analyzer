@@ -139,6 +139,7 @@ const ResumeUploadCard = () => {
                             </Typography>
                         </Stack>
                         <input
+                            data-testid="resume-upload-input"
                             ref={fileInputRef}
                             type="file"
                             hidden

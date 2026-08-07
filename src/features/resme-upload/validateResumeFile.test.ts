@@ -1,25 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { validateResumeFile } from './validateResumeFile';
 import { MAX_RESUME_FILE_SIZE_BYTES, VALIDATION_ERROR_CODES,VALIDATION_ERROR_MESSAGES } from "./validationConstants";
-
-type CreateTestFileOptions = {
-    name?: string;
-    type?: string;
-    size?: number;
-};
-const DEFAULT_TEST_FILE = {
-    name: "resume.pdf",
-    type: "application/pdf",
-    size: 1024,
-};
-const createTestFile = (options: CreateTestFileOptions = {}): File => {
-    const { name, type, size } = { ...DEFAULT_TEST_FILE, ...options };
-    return new File(
-        [new Uint8Array(size)],
-        name,
-        { type }
-    );
-};
+import createTestFile  from "../../test/utils/testUtils";
 describe("validateResumeFile", () => {
 
     describe("Valid files", () => { 
