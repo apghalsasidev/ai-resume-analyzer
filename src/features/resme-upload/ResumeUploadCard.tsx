@@ -93,7 +93,7 @@ const ResumeUploadCard = () => {
                     {/* Header */}
                     <Stack direction="column" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Typography variant="h5">Upload Your Resume</Typography>
-                        <Typography variant="body2"> Upload your resume in PDF or DOCX format to begin AI-powered resume analysis.</Typography>
+                        <Typography variant="body2"> Upload your resume in PDF, DOC or DOCX format to begin AI-powered resume analysis.</Typography>
                     </Stack>
                     {/* File Upload Section - Browse & Drag-and-Drop */}
                     <Box 
@@ -139,6 +139,7 @@ const ResumeUploadCard = () => {
                             </Typography>
                         </Stack>
                         <input
+                            data-testid="resume-upload-input"
                             ref={fileInputRef}
                             type="file"
                             hidden
