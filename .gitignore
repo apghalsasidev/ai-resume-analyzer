@@ -34,4 +34,4 @@ Thumbs.db
 /playwright/.auth/
 
 # reources
-resources/
+/tests/resources/
