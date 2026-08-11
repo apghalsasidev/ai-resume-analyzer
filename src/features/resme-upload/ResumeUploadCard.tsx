@@ -1,4 +1,4 @@
-import { useRef, useState, ChangeEvent } from 'react';
+import React, { useRef, useState, ChangeEvent } from 'react';
 
 import { Box, Card, CardContent, Stack, Typography, Button, Alert } from '@mui/material';
 import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
@@ -97,6 +97,8 @@ const ResumeUploadCard = () => {
                     </Stack>
                     {/* File Upload Section - Browse & Drag-and-Drop */}
                     <Box 
+                        role="region"
+                        aria-label="Resume upload area"
                         onClick={handleBrowseClick}
                         onDragEnter={handleDragEnter}
                         onDragLeave={handleDragLeave}
