@@ -355,4 +355,20 @@ describe("ResumeUploadCard", () => {
             ).toBeInTheDocument();
         });
     });
+    describe("Accessibility", () => {
+        it("should allow keyboard users to focus the Browse Files button", async () => {
+            // Arrange
+            const user = userEvent.setup();
+            render(<ResumeUploadCard />);
+
+            const browseButton = screen.getByRole("button", {
+                name: /Browse Files/i,
+            });
+
+            // Act
+            await user.tab();
+            // Assert
+            expect(browseButton).toHaveFocus();
+        });
+    });
 });
