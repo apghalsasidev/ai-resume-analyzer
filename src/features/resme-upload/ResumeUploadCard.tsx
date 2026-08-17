@@ -89,7 +89,7 @@ const ResumeUploadCard = () => {
     return (
         <Card elevation={3}> 
             <CardContent>
-                <Stack direction="column" spacing={4} sx={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                <Stack direction="column" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                     {/* Header */}
                     <Stack direction="column" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Typography variant="h5">Upload Your Resume</Typography>
@@ -111,16 +111,16 @@ const ResumeUploadCard = () => {
                                 ? "action.hover"
                                 : "transparent",
                             borderRadius: 2,
-                            p: 4,
+                            p: 2,
                             width: "100%",
                             textAlign: "center",
                             transition: "border-color 200ms ease, background-color 200ms ease"
                         }}
                     >
-                        <Stack spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Stack spacing={1.5} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                             <CloudUploadOutlinedIcon 
                                 color="primary"
-                                sx={{ fontSize: 56 }}
+                                sx={{ fontSize: 48 }}
                             />
                             <Typography variant="h6">
                                 {
