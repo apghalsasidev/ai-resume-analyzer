@@ -5,7 +5,7 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import { ACCEPTED_FILE_EXTENSIONS, MAX_FILE_SIZE_MB , DROP_MULTIPLE_FILES_ERROR} from '@/constants/file';
 import { validateResumeFile } from './validateResumeFile';
 
-const ResumeUploadCard = () => {
+const ResumeUploadCard = React.memo(() => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -167,5 +167,5 @@ const ResumeUploadCard = () => {
             </CardContent>
         </Card>
     )
-};
+});
 export default ResumeUploadCard;

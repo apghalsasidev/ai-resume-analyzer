@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { Card, CardContent, Stack, TextField, Typography, Alert } from "@mui/material";
 import {
@@ -12,7 +12,7 @@ interface JobDescriptionInputProps {
     onChange: (value: string) => void;
 }
 
-const JobDescriptionInput = ({value, onChange}: JobDescriptionInputProps) => {
+const JobDescriptionInput = React.memo(({value, onChange}: JobDescriptionInputProps) => {
     const [error, setError] = useState<string | null>(null);
     const handleBlur = () => {
         const result = validateJobDescription(value);
@@ -82,6 +82,6 @@ const JobDescriptionInput = ({value, onChange}: JobDescriptionInputProps) => {
             </CardContent>
         </Card>
     );
-};
+});
 
 export default JobDescriptionInput;
