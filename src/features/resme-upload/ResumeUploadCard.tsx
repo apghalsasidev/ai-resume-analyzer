@@ -5,7 +5,7 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import { ACCEPTED_FILE_EXTENSIONS, MAX_FILE_SIZE_MB , DROP_MULTIPLE_FILES_ERROR} from '@/constants/file';
 import { validateResumeFile } from './validateResumeFile';
 
-const ResumeUploadCard = () => {
+const ResumeUploadCard = React.memo(() => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -89,7 +89,7 @@ const ResumeUploadCard = () => {
     return (
         <Card elevation={3}> 
             <CardContent>
-                <Stack direction="column" spacing={4} sx={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                <Stack direction="column" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                     {/* Header */}
                     <Stack direction="column" spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Typography variant="h5">Upload Your Resume</Typography>
@@ -111,17 +111,17 @@ const ResumeUploadCard = () => {
                                 ? "action.hover"
                                 : "transparent",
                             borderRadius: 2,
-                            p: 4,
+                            p: 2,
                             width: "100%",
                             textAlign: "center",
                             transition: "border-color 200ms ease, background-color 200ms ease"
                         }}
                         data-testid="resume-drop-zone"
                     >
-                        <Stack spacing={2} sx={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Stack spacing={1.5} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                             <CloudUploadOutlinedIcon 
                                 color="primary"
-                                sx={{ fontSize: 56 }}
+                                sx={{ fontSize: 48 }}
                             />
                             <Typography variant="h6">
                                 {
@@ -168,5 +168,5 @@ const ResumeUploadCard = () => {
             </CardContent>
         </Card>
     )
-};
+});
 export default ResumeUploadCard;
