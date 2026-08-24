@@ -130,4 +130,43 @@ describe("JobDescriptionInput", () => {
             screen.getByText(JOB_DESCRIPTION_ERROR_MESSAGES.REQUIRED)
         ).toBeInTheDocument();
     });
+    it("should clear the validation error when a valid job description is entered", async () => {
+        // Arrange
+        const user = userEvent.setup();
+
+        const TestWrapper = () => {
+            const [value, setValue] = useState("");
+
+            return (
+                <JobDescriptionInput
+                    value={value}
+                    onChange={setValue}
+                />
+            );
+        };
+
+        render(<TestWrapper />);
+
+        const textbox = screen.getByRole("textbox", {
+            name: /Job Description/i,
+        });
+
+        // Act 1 — trigger validation error
+        await user.click(textbox);
+        await user.tab();
+
+        // Assert 1
+        expect(
+            screen.getByText(JOB_DESCRIPTION_ERROR_MESSAGES.REQUIRED)
+        ).toBeInTheDocument();
+
+        // Act 2 — enter valid job description
+        await user.click(textbox);
+        await user.type(textbox, "Senior React Developer");
+
+        // Assert 2
+        expect(
+            screen.queryByText(JOB_DESCRIPTION_ERROR_MESSAGES.REQUIRED)
+        ).not.toBeInTheDocument();
+    });
 });

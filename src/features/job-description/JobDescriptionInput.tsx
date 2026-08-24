@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Card, CardContent, Stack, TextField, Typography, Alert } from "@mui/material";
+import { Card, CardContent, Stack, TextField, Typography } from "@mui/material";
 import {
     JOB_DESCRIPTION_PLACEHOLDER,
     MAX_JOB_DESCRIPTION_LENGTH,
