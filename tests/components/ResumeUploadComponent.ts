@@ -15,7 +15,7 @@ export class ResumeUploadComponent {
             });
 
         this.fileInput =
-            page.getByTestId("resume-file-input");
+            page.getByTestId("resume-upload-input");
 
         this.successAlert =
             page.getByRole("alert")
@@ -48,4 +48,8 @@ export class ResumeUploadComponent {
 
     }
 
+    async expectNoUploadedFile() {
+
+        await expect(this.successAlert).not.toBeVisible();
+    }
 }

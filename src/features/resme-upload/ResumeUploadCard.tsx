@@ -148,7 +148,6 @@ const ResumeUploadCard = () => {
                             hidden
                             accept={ACCEPTED_FILE_EXTENSIONS.join(',')}
                             onChange={handleFileSelect}
-                            data-testid="resume-file-input"
                         />
                         {
                             error && (

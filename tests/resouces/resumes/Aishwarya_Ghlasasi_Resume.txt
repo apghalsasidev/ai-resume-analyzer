@@ -1,3 +1,0 @@
-Aishwarya Ghalsasi
-Senior Frontend Developer
-React | Redux | Typescript | Javascript
