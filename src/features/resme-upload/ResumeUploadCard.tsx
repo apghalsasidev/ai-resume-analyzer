@@ -116,6 +116,7 @@ const ResumeUploadCard = React.memo(() => {
                             textAlign: "center",
                             transition: "border-color 200ms ease, background-color 200ms ease"
                         }}
+                        data-testid="resume-drop-zone"
                     >
                         <Stack spacing={1.5} sx={{ alignItems: 'center', justifyContent: 'center' }}>
                             <CloudUploadOutlinedIcon 
@@ -133,7 +134,7 @@ const ResumeUploadCard = React.memo(() => {
                             >
                                 or
                             </Typography>
-                            <Button variant="contained">
+                            <Button variant="contained" aria-label="Browse Files" data-testid="browse-files-button" onClick={handleBrowseClick}>
                                 Browse Files
                             </Button> 
                             <Typography variant="caption" color="text.secondary">
