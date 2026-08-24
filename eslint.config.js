@@ -46,5 +46,11 @@ export default tseslint.config(
         }
       ]
     }
-  }
+  },
+  {
+  files: ['tests/fixtures/**/*.ts'],
+  rules: {
+    'react-hooks/rules-of-hooks': 'off',
+  },
+},
 );
