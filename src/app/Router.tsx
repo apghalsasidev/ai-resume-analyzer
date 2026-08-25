@@ -1,11 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import ResumeUploadPage from '@/features/resme-upload/ResumeUploadPage';
-
+import ResumeAnalysisPage from "@/features/resume-analysis/ResumeAnalysisPage";
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <ResumeUploadPage />,
+    element: <ResumeAnalysisPage />,
   },
 ]);
 
