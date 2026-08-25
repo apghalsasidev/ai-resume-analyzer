@@ -6,6 +6,7 @@ import ResumeUploadCard from "./ResumeUploadCard";
 import createTestFile  from "../../test/utils/testUtils";
 import { MAX_RESUME_FILE_SIZE_BYTES, VALIDATION_ERROR_MESSAGES } from "./validationConstants";
 import { DROP_MULTIPLE_FILES_ERROR } from "@/constants/file";
+import { useState } from "react";
 
 const setupResumeUpload = () => {
     // Arrange
@@ -13,8 +14,19 @@ const setupResumeUpload = () => {
         applyAccept: false,
     });
 
-    render(<ResumeUploadCard />);
+    const TestWrapper = () => {
+        const [selectedFile, setSelectedFile] =
+            useState<File | null>(null);
 
+        return (
+            <ResumeUploadCard
+                selectedFile={selectedFile}
+                onFileSelected={setSelectedFile}
+            />
+        );
+    };
+
+    render(<TestWrapper />);
     const fileInput = screen.getByTestId(
         "resume-upload-input"
     ) as HTMLInputElement;
@@ -28,7 +40,7 @@ describe("ResumeUploadCard", () => {
      describe('Rendering', () => {
         it('should render the upload heading', () => {
             // Arrange
-            render(<ResumeUploadCard />);
+           setupResumeUpload();
             // Assert
             expect(
                 screen.getByRole('heading', { name: /Upload Your Resume/i })
@@ -37,7 +49,7 @@ describe("ResumeUploadCard", () => {
 
         it('should render upload description', () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
             // Assert
             expect(
                 screen.getByText(/Upload your resume in PDF, DOC or DOCX format to begin AI-powered resume analysis./i)
@@ -46,7 +58,7 @@ describe("ResumeUploadCard", () => {
 
         it('should render Browse Files button', () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
             // Assert
             expect(
                 screen.getByRole('button', {name:/Browse Files/i})
@@ -146,7 +158,7 @@ describe("ResumeUploadCard", () => {
     describe("Drag and Drop", () => {
         it("should indicate when a file is being dragged over the upload area", () => {
             // Arrange
-             render(<ResumeUploadCard />);
+            setupResumeUpload();
 
             const dropZone = screen.getByRole("region", {
                 name: /resume upload area/i,
@@ -162,7 +174,7 @@ describe("ResumeUploadCard", () => {
         });
         it("should reset the drag state when the file leaves the upload area", () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
 
             const dropZone = screen.getByRole("region", {
                 name: /resume upload area/i,
@@ -183,7 +195,7 @@ describe("ResumeUploadCard", () => {
         });
         it("should handle a valid file drop and display the selected filename", async () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
             const dropZone = screen.getByRole("region", {
                 name: /resume upload area/i,
             });
@@ -204,7 +216,7 @@ describe("ResumeUploadCard", () => {
         });
         it("should display an error after dropping an unsupported file", async () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
 
             const dropZone = screen.getByRole("region", {
                 name: /resume upload area/i,
@@ -235,7 +247,7 @@ describe("ResumeUploadCard", () => {
         });
         it("should display an error when multiple files are dropped", async () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
 
             const dropZone = screen.getByRole("region", {
                 name: /resume upload area/i,
@@ -269,7 +281,7 @@ describe("ResumeUploadCard", () => {
         });
         it("should display error message when an empty file is dropped", async () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
             const dropZone  = screen.getByRole("region", {
                 name: /resume upload area/i,
             });
@@ -295,7 +307,7 @@ describe("ResumeUploadCard", () => {
         });
         it("should remain in the idle state when no files are dropped", () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
 
             const dropZone = screen.getByRole("region", {
                 name: /resume upload area/i,
@@ -319,7 +331,7 @@ describe("ResumeUploadCard", () => {
         });
         it("should remain in dragging state until all drag enter events have been left", () => {
             // Arrange
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
 
             const dropZone = screen.getByRole("region", {
                 name: /resume upload area/i,
@@ -359,7 +371,7 @@ describe("ResumeUploadCard", () => {
         it("should allow keyboard users to focus the Browse Files button", async () => {
             // Arrange
             const user = userEvent.setup();
-            render(<ResumeUploadCard />);
+            setupResumeUpload();
 
             const browseButton = screen.getByRole("button", {
                 name: /Browse Files/i,

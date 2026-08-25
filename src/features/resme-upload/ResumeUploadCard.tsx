@@ -5,8 +5,11 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import { ACCEPTED_FILE_EXTENSIONS, MAX_FILE_SIZE_MB , DROP_MULTIPLE_FILES_ERROR} from '@/constants/file';
 import { validateResumeFile } from './validateResumeFile';
 
-const ResumeUploadCard = React.memo(() => {
-    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+interface ResumeUploadCardProps {
+    selectedFile: File | null;
+    onFileSelected: (file: File | null) => void;
+}
+const ResumeUploadCard = React.memo(({ selectedFile, onFileSelected }: ResumeUploadCardProps) => {
     const [error, setError] = useState<string | null>(null);
     const [isDragging, setIsDragging] = useState(false);
 
@@ -61,13 +64,13 @@ const ResumeUploadCard = React.memo(() => {
         
         // 4.2 Handle Validation Result
         if (!result.valid) {
-            setSelectedFile(null);
+            onFileSelected(null);
             setError(result.message);
             return;
         }
 
         // 4.3 Successful Validation: Set the selected file
-        setSelectedFile(file);
+        onFileSelected(file);
         setError(null);
     }
 
@@ -134,7 +137,14 @@ const ResumeUploadCard = React.memo(() => {
                             >
                                 or
                             </Typography>
-                            <Button variant="contained" aria-label="Browse Files" data-testid="browse-files-button" onClick={handleBrowseClick}>
+                            <Button 
+                                variant="contained" 
+                                aria-label="Browse Files" 
+                                data-testid="browse-files-button" 
+                                onClick={(event) => {
+                                    event.stopPropagation();
+                                    handleBrowseClick();
+                                }}>
                                 Browse Files
                             </Button> 
                             <Typography variant="caption" color="text.secondary">
