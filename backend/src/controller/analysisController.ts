@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 
 import { analyzeResume as runAnalysis } from "../services/analysisService.js";
+import { validateResumeFile } from "../validators/resumeValidator.js";
 
 export const analyzeResume = async (
     request: Request,
@@ -14,6 +15,14 @@ export const analyzeResume = async (
             code: "INVALID_RESUME",
             message: "Resume file is required.",
         });
+
+        return;
+    }
+    
+    const validationResult = validateResumeFile(file);
+
+    if (!validationResult.valid) {
+        response.status(400).json(validationResult);
 
         return;
     }
